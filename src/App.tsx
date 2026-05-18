@@ -19,7 +19,7 @@ export default function App() {
 
         {/* Conteúdo com efeito de vidro */}
         <main className="flex-1 flex flex-col p-8">
-           <div className="bg-white/60 backdrop-blur-md border border-white/20 shadow-2xl rounded-3xl p-6 h-full">
+           <<div className="min-h-screen bg-red-600">">
              <Cadastro />
            </div>
         </main>
