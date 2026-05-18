@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# ESSA LINHA É OBRIGATÓRIA PARA SUA SEGURANÇA:
+.env
