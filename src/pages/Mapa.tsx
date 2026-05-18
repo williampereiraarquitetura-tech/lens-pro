@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { supabase } from '../lib/supabaseClient';
-import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 
-// Correção dos ícones padrão do Leaflet no React
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-let DefaultIcon = L.icon({
-    iconUrl: icon,
-    shadowUrl: iconShadow,
-    iconSize: [25, 41],
-    iconAnchor:[12, 41]
+// SOLUÇÃO: Usar ícone via CDN para evitar erro de 404
+const DefaultIcon = L.icon({
+  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
 });
 L.Marker.prototype.options.icon = DefaultIcon;
 
@@ -28,9 +24,10 @@ export default function Mapa() {
   },[]);
 
   return (
-    <div className="h-full w-full rounded-2xl overflow-hidden shadow-lg border border-gray-200">
+    // Altura fixa é obrigatória para o mapa aparecer!
+    <div className="h-[500px] w-full rounded-2xl overflow-hidden shadow-lg border border-gray-200">
       <MapContainer 
-        center={[-22.01, -47.89] as [number, number]} 
+        center={[-22.01, -47.89]} 
         zoom={13} 
         className="h-full w-full"
       >
@@ -40,13 +37,9 @@ export default function Mapa() {
         />
         
         {empreendimentos.map((e) => (
-          // Só coloca pino se tiver lat e lng salvos no banco
           e.lat && e.lng ? (
             <Marker key={e.id} position={[parseFloat(e.lat), parseFloat(e.lng)]}>
-              <Popup>
-                <div className="font-bold text-sm">{e.nome}</div>
-                <div className="text-xs text-gray-500">{e.empresa}</div>
-              </Popup>
+              <Popup>{e.nome || 'Sem nome'}</Popup>
             </Marker>
           ) : null
         ))}
