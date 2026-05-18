@@ -1,35 +1,29 @@
 import { useState } from 'react';
 import Cadastro from './pages/Cadastro';
+import { DottedSurface } from './components/DottedSurface';
 
 export default function App() {
   const[activeTab, setActiveTab] = useState('cadastro');
 
   return (
-    <div className="flex h-screen bg-[#F5F5F3] font-sans text-[#111111]">
-      <aside className="w-52 bg-dark text-white flex flex-col p-4">
-        <h1 className="text-xl font-bold tracking-widest text-primary mb-8">LENS</h1>
-        <nav className="flex flex-col gap-2">
-          {['mapa', 'dashboard', 'cadastro'].map((tab) => (
-            <button 
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`p-2 rounded-lg text-left capitalize ${activeTab === tab ? 'bg-primary text-white' : 'hover:bg-[#1A1A1A] text-gray-400'}`}
-            >
-              {tab}
-            </button>
-          ))}
-        </nav>
-      </aside>
+    // O relative aqui garante que o background 3D fique fixo no fundo
+    <div className="relative min-h-screen bg-gray-100 text-gray-900 overflow-hidden">
+      <DottedSurface />
 
-      <main className="flex-1 flex flex-col">
-        <header className="h-[58px] bg-white border-b border-gray-200 flex items-center px-6 shadow-sm">
-          <h2 className="font-bold text-lg capitalize">{activeTab}</h2>
-        </header>
+      <div className="flex h-screen relative z-10">
+        {/* Sidebar com Glassmorphism */}
+        <aside className="w-52 bg-black/80 backdrop-blur-xl text-white flex flex-col p-4 border-r border-white/10">
+          <h1 className="text-xl font-bold tracking-widest text-primary mb-8">LENS</h1>
+          {/* ... nav ... */}
+        </aside>
 
-        <section className="flex-1 p-6 overflow-auto">
-          {activeTab === 'cadastro' ? <Cadastro /> : <div>Conteúdo de {activeTab}</div>}
-        </section>
-      </main>
+        {/* Conteúdo com efeito de vidro */}
+        <main className="flex-1 flex flex-col p-8">
+           <div className="bg-white/60 backdrop-blur-md border border-white/20 shadow-2xl rounded-3xl p-6 h-full">
+             <Cadastro />
+           </div>
+        </main>
+      </div>
     </div>
   );
 }
