@@ -4,12 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#FF5E0E',    // O seu laranja LENS
-        secondary: '#011DFC',  // O seu azul LENS
-        dark: '#0C0C0C',       // O seu preto da sidebar
-        surface: '#F5F5F3',    // O seu fundo
+        primary: '#FF5E0E',
       },
     },
   },
-  plugins:[],
 }
